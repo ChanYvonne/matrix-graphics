@@ -10,7 +10,7 @@ def print_matrix( matrix ):
         for r in range(len(matrix[0])):
             s+=str(matrix[c][r]) + "\t"
         s+="\n"
-    return s
+    print s
 
 def ident( matrix ):
     cols = len(matrix)
@@ -21,9 +21,9 @@ def ident( matrix ):
     for c in range (cols):
         for r in range (rows):
             if c == r:
-                m[c][r] = 1
+                m[c][r] = 1.00
             else:
-                m[c][r] = 0
+                m[c][r] = 0.00
     return m
 
 def scalar_mult( matrix, s ):
@@ -41,9 +41,9 @@ def matrix_mult( m1, m2 ):
     m = new_matrix(len(m1),len(m2[0]))
     row = 0
     col = 0
-    for r in range(len(m)):
-        for c in range(len(m[0])):
-            m[r][c] = sumOf(m1,m2,c,r)
+    for c in range(len(m)):
+        for r in range(len(m[0])):
+            m[c][r] = sumOf(m1,m2,c,r)
     return m
 
 #helper to calculate the multiplaction of col-th col of m2 and row-th row of m1
@@ -55,54 +55,55 @@ def sumOf(m1, m2, col, row):
     #print mcol
     index = 0;
     while index < len(mcol) and index < len(m1[row]):
-        num+=mcol[index]*m1[row][index]
+        num+=float('%.2f'%(float(mcol[index])*float(m1[row][index])))
         index+=1
     return num
     
 
 def new_matrix(rows = 4, cols = 4):
     m = []
-    for r in range( rows ):
+    for c in range( cols ):
         m.append( [] )
-        for c in range( cols ):
-            m[r].append( 0 )
+        for r in range( rows ):
+            m[c].append( 0 )
     return m
 
 
 #test cases
 #print print_matrix(new_matrix())
 print "To show creating identity matrix works:"
-print print_matrix(ident(new_matrix()))
+print_matrix(ident(new_matrix()))
 
 print "To show scalar multiplication works:"
 print "Original:"
 t = new_matrix(4,4)
 for c in range(len(t)):
     for r in range(len(t[0])):
-        t[c][r]= random.randint(0,9)
-print print_matrix(t)
-rand = random.randint(0, 12)
+        t[c][r]= random.randint(0,9)*1.00
+print_matrix(t)
+rand = random.randint(0,9)
 print "Multiplied by "+str(rand)+" to get:"
-print print_matrix(scalar_mult(t,rand))
+print_matrix(scalar_mult(t,rand))
 
-
+'''
 count = 0
 print "To show matrix multiplication works:"
-while count < 15:
+while count < 3:
     print "m1:"
     m1 = new_matrix(4,4)
     for c in range(len(m1)):
         for r in range(len(m1[0])):
-            m1[c][r]= random.randint(0,9)
-    print print_matrix(m1)
+            m1[c][r]= '%.2f'%(random.random()*9)
+    print_matrix(m1)
     print "m2:"
     m2 = new_matrix(4,random.randint(1,15))
     for c in range(len(m2)):
         for r in range(len(m2[0])):
-            m2[c][r]= random.randint(0,9)
-    print print_matrix(m2)
+            m2[c][r]= '%.2f'%(random.random()*9)
+    print_matrix(m2)
     print "product: m1*m2"
-    print print_matrix(matrix_mult(m1,m2))
+    print_matrix(matrix_mult(m1,m2))
     count +=1
-    if count != 15:
+    if count != 3:
         print "Multiplying matrixes again for good measure"
+'''
